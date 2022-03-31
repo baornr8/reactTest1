@@ -130,7 +130,7 @@ const ToDo = () => {
           openInfo={setOpenInfo}
           info={setInfoToDo}
           openEdit={setOpenEdit}
-          edit={editToDo}
+          edit={setEditToDo}
         />
       </Dialog>
     </div>

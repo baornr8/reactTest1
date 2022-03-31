@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectArchiveList } from "../store/toDo";
+import { deleteToDo, selectArchiveList } from "../store/toDo";
 import CheckIcon from "@mui/icons-material/Check";
 import IconButton from "@mui/material/IconButton";
 import { Button } from "@mui/material";
@@ -51,8 +51,8 @@ const Archive = ({ openInfo, info, openEdit, edit }) => {
                 color="info"
                 endIcon={<SettingsIcon />}
                 onClick={() => {
-                  setOpenEdit(true);
-                  setEditToDo(key);
+                  openEdit(true);
+                  edit(key);
                 }}
               >
                 edit

@@ -10,6 +10,8 @@ const toDoSlice = createSlice({
     mode: false,
   },
   reducers: {
+    weatherRequest: (state, action) => {},
+    weatherRequestFalid: (state, action) => {},
     toDoCreate: (state, action) => {
       state.toDoList.unshift(action.payload);
     },
@@ -38,6 +40,8 @@ const toDoSlice = createSlice({
 });
 
 export const {
+  weatherRequest,
+  weatherRequestFalid,
   CourentWeatherSet,
   modeChange,
   toDoCreate,
@@ -67,9 +71,23 @@ export const editToDo = (toDo) => {
   };
 };
 
-export const setCurrentWeather = (weather) => apiCallBegan({});
+export const setCurrentWeather = (weather) =>
+  apiCallBegan({
+    url: `data/2.5/weather?lat=${weather.lat}&lon=${weather.lon}&exclude=current&appid=45ce8911132bba34bd32be0b34b539b1&units=metric`,
+    method: "get",
+    onStart: weatherRequest.type,
+    onSuccess: CourentWeatherSet.type,
+    onError: weatherRequestFalid.type,
+  });
 
-export const setWeatherList = (weather) => apiCallBegan({});
+export const setWeatherList = (weather) =>
+  apiCallBegan({
+    url: `data/2.5/onecall?lat=${weather.lat}&lon=${weather.lon}&units=metric&appid=45ce8911132bba34bd32be0b34b539b1&units=metric`,
+    method: "get",
+    onStart: weatherRequest.type,
+    onSuccess: weatherListSet.type,
+    onError: weatherRequestFalid.type,
+  });
 
 export const changeMode = () => {
   return {
@@ -85,4 +103,14 @@ export const selectToDoList = createSelector(
 export const selectArchiveList = createSelector(
   (state) => state.entities.toDo,
   (toDo) => toDo.toDoList.filter((key) => key.archiveAt.length > 1)
+);
+
+export const selectCurrentWeather = createSelector(
+  (state) => state.entities.toDo,
+  (toDo) => toDo.CurrentWeather
+);
+
+export const selectWeatherList = createSelector(
+  (state) => state.entities.toDo,
+  (toDo) => toDo.weatherList
 );

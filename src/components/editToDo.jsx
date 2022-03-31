@@ -46,6 +46,11 @@ const EditToDo = ({ edit, open }) => {
             dispatch(editToDo(editToDoo));
             open(false);
           }}
+          disabled={
+            editToDoo.title?.length < 1 || editToDoo.description?.length < 1
+              ? true
+              : false
+          }
         >
           save
         </Button>

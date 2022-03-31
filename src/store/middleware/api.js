@@ -12,7 +12,7 @@ const api =
 
     try {
       const response = await axios.request({
-        baseURL: "https://192.168.1.102:8000",
+        baseURL: "https://api.openweathermap.org",
         url,
         method,
         data,
